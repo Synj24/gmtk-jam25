@@ -1,17 +1,57 @@
-[gd_scene load_steps=4 format=3 uid="uid://c26dkstg4cqe8"]
+[gd_scene load_steps=9 format=3 uid="uid://c26dkstg4cqe8"]
 
 [ext_resource type="Script" uid="uid://cqoidt5kch35a" path="res://player_ghost.gd" id="1_h5qa1"]
-[ext_resource type="Texture2D" uid="uid://daccndcyagt34" path="res://icon.svg" id="1_wugak"]
+[ext_resource type="Texture2D" uid="uid://dgfhqy7sxeo23" path="res://assets/Running_Sheet.png" id="2_h5qa1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hqtel"]
 size = Vector2(124, 128)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_hqtel"]
+atlas = ExtResource("2_h5qa1")
+region = Rect2(0, 0, 1700, 1700)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sweqy"]
+atlas = ExtResource("2_h5qa1")
+region = Rect2(1700, 0, 1700, 1700)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2hs0m"]
+atlas = ExtResource("2_h5qa1")
+region = Rect2(3400, 0, 1700, 1700)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1jxqw"]
+atlas = ExtResource("2_h5qa1")
+region = Rect2(1700, 0, 1700, 1700)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ccxis"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hqtel")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sweqy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2hs0m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1jxqw")
+}],
+"loop": true,
+"name": &"run",
+"speed": 5.0
+}]
+
 [node name="PlayerGhost" type="CharacterBody2D"]
 script = ExtResource("1_h5qa1")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-modulate = Color(0.63074, 0.94, 0.0564, 1)
-texture = ExtResource("1_wugak")
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_hqtel")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+modulate = Color(0, 0.342176, 0.568853, 0.588235)
+position = Vector2(0, -23)
+scale = Vector2(0.103529, 0.103529)
+sprite_frames = SubResource("SpriteFrames_ccxis")
+animation = &"run"
+autoplay = "run"
