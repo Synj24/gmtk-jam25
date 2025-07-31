@@ -12,6 +12,8 @@ func _ready():
 	#Ititial position
 	movement_data[0] = global_position
 
+var lap_start_count = 0  # Track when current lap started
+
 func _physics_process(delta: float) -> void:
 	record_movement()
 	
@@ -25,10 +27,15 @@ func _physics_process(delta: float) -> void:
 	
 	# Handle looping off screen right
 	if position.x > 1150:
-		SignalBus.player_looped.emit(movement_data)
+		# Create dictionary with just this lap's movement data
+		var lap_data = {}
+		for i in range(lap_start_count, count + 1):
+			if movement_data.has(i):
+				lap_data[i - lap_start_count] = movement_data[i]
+				
+		SignalBus.player_looped.emit(lap_data)
 		position.x = 0
-		# Reset movement data
-		#movement_data.clear()
+		lap_start_count = count + 1  # Start counting new lap from here
 	
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
